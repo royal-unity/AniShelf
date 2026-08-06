@@ -59,7 +59,7 @@ class User extends Authenticatable
     /**
      * このユーザーがお気に入り登録しているジャンルを取得する
      *
-     * @return BelongsToMany<User, $this>
+     * @return BelongsToMany<Genre, $this>
      */
     public function favoriteGenres(): BelongsToMany
     {

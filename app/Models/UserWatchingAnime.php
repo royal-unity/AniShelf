@@ -3,31 +3,20 @@
 namespace App\Models;
 
 use App\Enum\WatchingStatus;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+// 一括代入を許可する属性
+#[Fillable(['user_id', 'anime_id', 'status'])]
 class UserWatchingAnime extends Model
 {
-    use HasFactory;
-
-    /**
-     * 代入可能な属性
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'user_id',
-        'anime_id',
-        'status',
-    ];
-
     /**
      * キャストする属性
      *
-     * @var array
+     * @return array{status: string}
      */
-    protected function casts(): array
+    protected function casts()
     {
         return [
             'status' => WatchingStatus::class,

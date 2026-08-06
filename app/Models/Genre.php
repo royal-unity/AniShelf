@@ -2,24 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+// 一括代入を許可する属性
+#[Fillable(['name'])]
 class Genre extends Model
 {
-    use HasFactory;
-
-    /**
-     * 代入可能な属性
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-    ];
-
     /**
      * このジャンルに紐づいているアニメを取得する
      *
