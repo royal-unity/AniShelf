@@ -7,6 +7,8 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -42,5 +44,25 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * このユーザーに紐づく視聴情報を取得する
+     *
+     * @return HasMany<UserWatchingAnime, $this>
+     */
+    public function userWatchingAnimes(): HasMany
+    {
+        return $this->hasMany(UserWatchingAnime::class);
+    }
+
+    /**
+     * このユーザーがお気に入り登録しているジャンルを取得する
+     *
+     * @return BelongsToMany<Genre, $this>
+     */
+    public function favoriteGenres(): BelongsToMany
+    {
+        return $this->belongsToMany(Genre::class, 'user_favorite_genres');
     }
 }
