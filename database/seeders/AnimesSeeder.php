@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Anime;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 use Storage;
 
 class AnimesSeeder extends Seeder
@@ -119,7 +120,7 @@ class AnimesSeeder extends Seeder
 
                 Storage::disk('public')->put(
                     $storagePath,
-                    file_get_contents($sourcePath),
+                    File::get($sourcePath),
                 );
 
                 $anime['anime_img_path'] = $storagePath;
