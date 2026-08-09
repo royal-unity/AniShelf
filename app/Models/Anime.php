@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'official_site_url',
     'description',
     'is_current_season',
+    'anime_img_path',
 ])]
 class Anime extends Model
 {

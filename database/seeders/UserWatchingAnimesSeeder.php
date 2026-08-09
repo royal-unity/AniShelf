@@ -3,10 +3,9 @@
 namespace Database\Seeders;
 
 use App\Enum\WatchingStatus;
-use App\Models\User;
 use App\Models\Anime;
+use App\Models\User;
 use App\Models\UserWatchingAnime;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserWatchingAnimesSeeder extends Seeder
@@ -19,7 +18,7 @@ class UserWatchingAnimesSeeder extends Seeder
         $users = User::all();
         $animes = Anime::all();
 
-        foreach($users as $user){
+        foreach ($users as $user) {
             $watchAnimeesId = $animes->random(3)->pluck('id')->toArray();
 
             $status = [
@@ -28,7 +27,7 @@ class UserWatchingAnimesSeeder extends Seeder
                 WatchingStatus::Completed,
             ];
 
-            foreach($watchAnimeesId as $index => $wathcAnimeId){
+            foreach ($watchAnimeesId as $index => $wathcAnimeId) {
                 UserWatchingAnime::create([
                     'user_id' => $user->id,
                     'anime_id' => $wathcAnimeId,
