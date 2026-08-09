@@ -63,6 +63,6 @@ class User extends Authenticatable
      */
     public function favoriteGenres(): BelongsToMany
     {
-        return $this->belongsToMany(Genre::class, 'user_favorite_genres')->withTimestamps();;
+        return $this->belongsToMany(Genre::class, 'user_favorite_genres')->withTimestamps();
     }
 }

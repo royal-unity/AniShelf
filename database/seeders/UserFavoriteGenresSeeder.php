@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use App\Models\Genre;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class UserFavoriteGenresSeeder extends Seeder
@@ -17,9 +16,9 @@ class UserFavoriteGenresSeeder extends Seeder
         $users = User::all();
         $genres = Genre::all();
 
-        foreach($users as $user){
+        foreach ($users as $user) {
             // お気に入りにするジャンル3つをランダムで取得
-            $favoriteGenreIds = $genres->random(rand(0,3))->pluck('id')->toArray();
+            $favoriteGenreIds = $genres->random(rand(0, 3))->pluck('id')->toArray();
 
             // 中間テーブルに登録
             $user->favoriteGenres()->syncWithoutDetaching($favoriteGenreIds);

@@ -28,6 +28,6 @@ class Genre extends Model
      */
     public function favoriteUsers(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'user_favorite_genres')->withTimestamps();;
+        return $this->belongsToMany(User::class, 'user_favorite_genres')->withTimestamps();
     }
 }
