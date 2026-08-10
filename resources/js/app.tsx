@@ -29,7 +29,7 @@ createInertiaApp({
             <AppChakraProvider>
                 <TooltipProvider delayDuration={0}>
                     {app}
-                    <Toaster />
+                    <Toaster richColors position="top-center" />
                 </TooltipProvider>
             </AppChakraProvider>
         );
