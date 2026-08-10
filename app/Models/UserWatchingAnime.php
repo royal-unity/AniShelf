@@ -7,16 +7,18 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-// 一括代入を許可する属性
+/**
+ * @property WatchingStatus $status
+ */
 #[Fillable(['user_id', 'anime_id', 'status'])]
 class UserWatchingAnime extends Model
 {
     /**
      * キャストする属性
      *
-     * @return array{status: string}
+     * @return array<string, string|\Stringable>
      */
-    protected function casts()
+    protected function casts() : array
     {
         return [
             'status' => WatchingStatus::class,

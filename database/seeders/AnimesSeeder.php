@@ -112,19 +112,17 @@ class AnimesSeeder extends Seeder
 
         foreach ($animes as $index => $anime) {
 
-            if ($anime['image_name']) {
-                $id = $index + 1;
-                $imageName = $anime['image_name'];
-                $sourcePath = database_path("seeders/images/{$imageName}");
-                $storagePath = "animes/{$id}/{$imageName}";
+            $id = $index + 1;
+            $imageName = $anime['image_name'];
+            $sourcePath = database_path("seeders/images/{$imageName}");
+            $storagePath = "animes/{$id}/{$imageName}";
 
-                Storage::disk('public')->put(
-                    $storagePath,
-                    File::get($sourcePath),
-                );
+            Storage::disk('public')->put(
+                $storagePath,
+                File::get($sourcePath),
+            );
 
-                $anime['anime_img_path'] = $storagePath;
-            }
+            $anime['anime_img_path'] = $storagePath;
 
             unset($anime['image_name']);
             Anime::create($anime);
