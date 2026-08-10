@@ -18,7 +18,7 @@ class UserWatchingAnime extends Model
      *
      * @return array<string, string|\Stringable>
      */
-    protected function casts() : array
+    protected function casts(): array
     {
         return [
             'status' => WatchingStatus::class,
