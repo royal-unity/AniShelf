@@ -12,7 +12,14 @@ export default function SiteLayout({ children }: SiteLayoutProps) {
         <Box minHeight="100vh" display="flex" flexDirection="column">
             <SiteHeader />
 
-            <Box as="main" flex="1">
+            <Box
+                as="main"
+                flex="1"
+                p="8"
+                maxW={'1500px'}
+                width={'100%'}
+                mx={'auto'}
+            >
                 {children}
             </Box>
 

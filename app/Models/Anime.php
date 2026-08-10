@@ -19,6 +19,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Anime extends Model
 {
     /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'is_current_season' => 'boolean',
+        ];
+    }
+
+    /**
      * このアニメに紐づくユーザーの視聴情報を取得する
      *
      * @return HasMany<UserWatchingAnime, $this>

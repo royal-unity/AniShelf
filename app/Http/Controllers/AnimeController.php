@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\WatchingStatus;
 use App\Models\Anime;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,10 +12,8 @@ class AnimeController extends Controller
 {
     /**
      * アニメ一覧を表示する
-     *
-     * @return Response
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $keyword = $request->string('keyword')->trim()->toString();
 
@@ -48,11 +47,25 @@ class AnimeController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * アニメ詳細画面表示
      */
-    public function show(string $id): void
+    public function show(Anime $anime): Response
     {
-        //
+        $showAnime = $anime->load('genre');
+
+        $userWatchingAnime = $anime->userWatchingAnimes()->where('user_id', auth()->id())->first();
+
+        return Inertia::render('animes/show', [
+            'anime' => $showAnime,
+            'currentWatchingStatus' => $userWatchingAnime ? (string) $userWatchingAnime->status->value : null,
+            'watchingStatuses' => array_map(
+                fn (WatchingStatus $status) => [
+                    'label' => $status->lavel(),
+                    'value' => (string) $status->value,
+                ],
+                WatchingStatus::cases(),
+            ),
+        ]);
     }
 
     /**

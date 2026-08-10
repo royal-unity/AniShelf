@@ -2,7 +2,7 @@ import { Box, Button, HStack, Input, SimpleGrid, Text } from '@chakra-ui/react';
 import { Link, router } from '@inertiajs/react';
 import type { SubmitEvent } from 'react';
 import { useState } from 'react';
-import AnimeCard from '@/components/animeCard/animeCard';
+import AnimeCard from '@/components/AnimeCard/AnimeCard';
 import type { Anime } from '@/types/animes/anime';
 
 type PaginationLink = {
@@ -32,7 +32,7 @@ export default function AnimesIndex({ animes, searchKeyword }: AnimePageProps) {
     };
 
     return (
-        <Box p="8" maxW={'1500px'} width={'100%'} mx={'auto'}>
+        <Box>
             <form onSubmit={handleSearch}>
                 {/* アニメ検索入力欄 */}
                 <HStack

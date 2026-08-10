@@ -34,7 +34,7 @@ class AnimesSeeder extends Seeder
                 'official_site_url' => 'https://laravel.com/docs',
                 'description' => '空に浮かぶ大陸を舞台に、失われた王国を探す飛空士たちの冒険を描く。',
                 'is_current_season' => true,
-                'image_name' => null,
+                'image_name' => 'noImage.png',
             ],
             [
                 'genre_id' => 7,
@@ -42,7 +42,7 @@ class AnimesSeeder extends Seeder
                 'official_site_url' => 'https://laravel.com/docs',
                 'description' => '雨の日にだけ他人の記憶が見える少女が、街で起きる事件の真相に迫る。',
                 'is_current_season' => true,
-                'image_name' => null,
+                'image_name' => 'noImage.png',
             ],
             [
                 'genre_id' => 8,
@@ -50,7 +50,7 @@ class AnimesSeeder extends Seeder
                 'official_site_url' => 'https://laravel.com/docs',
                 'description' => '魔法使いたちが集まる喫茶店で働く新人店員の日常と騒動を描くコメディ。',
                 'is_current_season' => true,
-                'image_name' => null,
+                'image_name' => 'noImage.png',
             ],
             [
                 'genre_id' => 3,
@@ -58,7 +58,7 @@ class AnimesSeeder extends Seeder
                 'official_site_url' => 'https://laravel.com/docs',
                 'description' => '巨大機械に支配された都市で、自由を求める若者たちが戦うSFアクション。',
                 'is_current_season' => true,
-                'image_name' => null,
+                'image_name' => 'noImage.png',
             ],
             [
                 'genre_id' => 7,
@@ -66,7 +66,7 @@ class AnimesSeeder extends Seeder
                 'official_site_url' => 'https://laravel.com/docs',
                 'description' => '人間には見えない怪異事件を専門に扱う、小さな探偵事務所の物語。',
                 'is_current_season' => false,
-                'image_name' => null,
+                'image_name' => 'noImage.png',
             ],
             [
                 'genre_id' => 5,
@@ -74,7 +74,7 @@ class AnimesSeeder extends Seeder
                 'official_site_url' => 'https://laravel.com/docs',
                 'description' => '廃部寸前の吹奏楽部に集まった生徒たちが、最後のコンクールを目指す青春物語。',
                 'is_current_season' => false,
-                'image_name' => null,
+                'image_name' => 'noImage.png',
             ],
             [
                 'genre_id' => 10,
@@ -82,7 +82,7 @@ class AnimesSeeder extends Seeder
                 'official_site_url' => 'https://laravel.com/docs',
                 'description' => '異世界に転移した青年が郵便配達員となり、さまざまな種族へ手紙を届ける。',
                 'is_current_season' => false,
-                'image_name' => null,
+                'image_name' => 'noImage.png',
             ],
             [
                 'genre_id' => 2,
@@ -90,7 +90,7 @@ class AnimesSeeder extends Seeder
                 'official_site_url' => 'https://laravel.com/docs',
                 'description' => '悪霊が集まる都市の片隅で、秘密を抱えた退魔師が戦い続けるダークファンタジー。',
                 'is_current_season' => false,
-                'image_name' => null,
+                'image_name' => 'noImage.png',
             ],
             [
                 'genre_id' => 2,
@@ -98,7 +98,7 @@ class AnimesSeeder extends Seeder
                 'official_site_url' => 'https://laravel.com/docs',
                 'description' => 'お菓子でできた王国を守るため、臆病な見習い騎士が仲間と成長していく。',
                 'is_current_season' => false,
-                'image_name' => null,
+                'image_name' => 'noImage.png',
             ],
             [
                 'genre_id' => 7,
@@ -106,25 +106,23 @@ class AnimesSeeder extends Seeder
                 'official_site_url' => 'https://laravel.com/docs',
                 'description' => '深海を走る列車に乗り込んだ乗客たちが、海底世界の秘密を解き明かす。',
                 'is_current_season' => false,
-                'image_name' => null,
+                'image_name' => 'noImage.png',
             ],
         ];
 
         foreach ($animes as $index => $anime) {
 
-            if ($anime['image_name']) {
-                $id = $index + 1;
-                $imageName = $anime['image_name'];
-                $sourcePath = database_path("seeders/images/{$imageName}");
-                $storagePath = "animes/{$id}/{$imageName}";
+            $id = $index + 1;
+            $imageName = $anime['image_name'];
+            $sourcePath = database_path("seeders/images/{$imageName}");
+            $storagePath = "animes/{$id}/{$imageName}";
 
-                Storage::disk('public')->put(
-                    $storagePath,
-                    File::get($sourcePath),
-                );
+            Storage::disk('public')->put(
+                $storagePath,
+                File::get($sourcePath),
+            );
 
-                $anime['anime_img_path'] = $storagePath;
-            }
+            $anime['anime_img_path'] = $storagePath;
 
             unset($anime['image_name']);
             Anime::create($anime);
