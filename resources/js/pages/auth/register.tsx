@@ -1,115 +1,177 @@
-import { Form, Head } from '@inertiajs/react';
-import InputError from '@/components/input-error';
-import PasswordInput from '@/components/password-input';
-import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Spinner } from '@/components/ui/spinner';
+import {
+    Box,
+    Button,
+    Card,
+    Link as ChakraLink,
+    Field,
+    Input,
+    Text,
+    VStack,
+} from '@chakra-ui/react';
+import { Form, Head, Link as InertiaLink } from '@inertiajs/react';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
-
-type Props = {
-    passwordRules: string;
-};
-
-export default function Register({ passwordRules }: Props) {
+export default function Register() {
     return (
         <>
-            <Head title="Register" />
-            <Form
-                {...store.form()}
-                resetOnSuccess={['password', 'password_confirmation']}
-                disableWhileProcessing
-                className="flex flex-col gap-6"
+            <Head title="新規登録" />
+            <Card.Root
+                borderWidth={'1px'}
+                borderColor={{ base: 'gray.200', _dark: 'gray.700' }}
+                borderRadius={'xl'}
+                bg={{ base: 'white', _dark: 'gray.900' }}
+                boxShadow={'sm'}
+                overflow={'hidden'}
             >
-                {({ processing, errors }) => (
-                    <>
-                        <div className="grid gap-6">
-                            <div className="grid gap-2">
-                                <Label htmlFor="name">ユーザーネーム</Label>
-                                <Input
-                                    id="name"
-                                    type="text"
-                                    required
-                                    autoFocus
-                                    tabIndex={1}
-                                    autoComplete="name"
-                                    name="name"
-                                    placeholder="Full name"
-                                />
-                                <InputError
-                                    message={errors.name}
-                                    className="mt-2"
-                                />
-                            </div>
+                <Box h={1} bg={'teal.500'}></Box>
 
-                            <div className="grid gap-2">
-                                <Label htmlFor="email">メールアドレス</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
+                <Card.Body p={{ base: '6', sm: '8' }}>
+                    <Form {...store.form()} noValidate>
+                        {({ processing, errors }) => (
+                            <VStack gap={6}>
+                                <Field.Root
                                     required
-                                    tabIndex={2}
-                                    autoComplete="email"
-                                    name="email"
-                                    placeholder="email@example.com"
-                                />
-                                <InputError message={errors.email} />
-                            </div>
-
-                            <div className="grid gap-2">
-                                <Label htmlFor="password">パスワード</Label>
-                                <PasswordInput
-                                    id="password"
+                                    invalid={Boolean(errors.name)}
+                                >
+                                    <Field.Label fontWeight={'semibold'}>
+                                        ユーザー名
+                                        <Field.RequiredIndicator />
+                                    </Field.Label>
+                                    <Input
+                                        type="name"
+                                        name="name"
+                                        required
+                                        autoFocus
+                                        tabIndex={1}
+                                        autoComplete="name"
+                                        placeholder="user"
+                                        size="lg"
+                                        borderColor={{
+                                            base: 'gray.300',
+                                            _dark: 'gray.600',
+                                        }}
+                                    />
+                                    <Field.ErrorText>
+                                        {errors.name}
+                                    </Field.ErrorText>
+                                </Field.Root>
+                                <Field.Root
                                     required
-                                    tabIndex={3}
-                                    autoComplete="new-password"
-                                    name="password"
-                                    placeholder="Password"
-                                    passwordrules={passwordRules}
-                                />
-                                <InputError message={errors.password} />
-                            </div>
-
-                            <div className="grid gap-2">
-                                <Label htmlFor="password_confirmation">
-                                    パスワード再入力
-                                </Label>
-                                <PasswordInput
-                                    id="password_confirmation"
+                                    invalid={Boolean(errors.email)}
+                                >
+                                    <Field.Label fontWeight={'semibold'}>
+                                        メールアドレス
+                                        <Field.RequiredIndicator />
+                                    </Field.Label>
+                                    <Input
+                                        type="email"
+                                        name="email"
+                                        required
+                                        tabIndex={1}
+                                        autoComplete="name"
+                                        placeholder="email@example.com"
+                                        size="lg"
+                                        borderColor={{
+                                            base: 'gray.300',
+                                            _dark: 'gray.600',
+                                        }}
+                                    />
+                                    <Field.ErrorText>
+                                        {errors.email}
+                                    </Field.ErrorText>
+                                </Field.Root>
+                                <Field.Root
                                     required
+                                    invalid={Boolean(errors.password)}
+                                >
+                                    <Field.Label fontWeight={'semibold'}>
+                                        パスワード
+                                        <Field.RequiredIndicator />
+                                    </Field.Label>
+                                    <Input
+                                        type="password"
+                                        name="password"
+                                        required
+                                        tabIndex={1}
+                                        autoComplete="password"
+                                        placeholder="password"
+                                        size="lg"
+                                        borderColor={{
+                                            base: 'gray.300',
+                                            _dark: 'gray.600',
+                                        }}
+                                    />
+                                    <Field.ErrorText>
+                                        {errors.password}
+                                    </Field.ErrorText>
+                                </Field.Root>
+                                <Field.Root
+                                    required
+                                    invalid={Boolean(
+                                        errors.password_confirmation,
+                                    )}
+                                >
+                                    <Field.Label fontWeight={'semibold'}>
+                                        パスワード再入力
+                                        <Field.RequiredIndicator />
+                                    </Field.Label>
+                                    <Input
+                                        type="password"
+                                        name="password_confirmation"
+                                        required
+                                        tabIndex={1}
+                                        autoComplete="password_confirmation"
+                                        placeholder="password"
+                                        size="lg"
+                                        borderColor={{
+                                            base: 'gray.300',
+                                            _dark: 'gray.600',
+                                        }}
+                                    />
+                                    <Field.ErrorText>
+                                        {errors.password_confirmation}
+                                    </Field.ErrorText>
+                                </Field.Root>
+                                <Button
+                                    type="submit"
+                                    size="lg"
+                                    width="full"
+                                    mt="1"
                                     tabIndex={4}
-                                    autoComplete="new-password"
-                                    name="password_confirmation"
-                                    placeholder="Confirm password"
-                                    passwordrules={passwordRules}
-                                />
-                                <InputError
-                                    message={errors.password_confirmation}
-                                />
-                            </div>
+                                    loading={processing}
+                                    loadingText="登録中"
+                                    colorPalette="teal"
+                                    data-test="login-button"
+                                >
+                                    新規登録
+                                </Button>
+                            </VStack>
+                        )}
+                    </Form>
+                </Card.Body>
 
-                            <Button
-                                type="submit"
-                                className="mt-2 w-full"
-                                tabIndex={5}
-                                data-test="register-user-button"
-                            >
-                                {processing && <Spinner />}
-                                アカウント作成
-                            </Button>
-                        </div>
-
-                        <div className="text-center text-sm text-muted-foreground">
-                            アカウントをお持ちの場合→{' '}
-                            <TextLink href={login()} tabIndex={6}>
+                <Card.Footer
+                    justifyContent="center"
+                    borderTopWidth="1px"
+                    borderColor={{ base: 'gray.100', _dark: 'gray.800' }}
+                    bg={{ base: 'gray.50', _dark: 'gray.950' }}
+                    py="4"
+                >
+                    <Text fontSize="sm" color="fg.muted">
+                        アカウントをお持ちですか？{' '}
+                        <ChakraLink
+                            asChild
+                            color="teal.600"
+                            fontWeight="semibold"
+                            textDecoration={'none'}
+                        >
+                            <InertiaLink href={login()} tabIndex={5}>
                                 ログイン
-                            </TextLink>
-                        </div>
-                    </>
-                )}
-            </Form>
+                            </InertiaLink>
+                        </ChakraLink>
+                    </Text>
+                </Card.Footer>
+            </Card.Root>
         </>
     );
 }

@@ -19,7 +19,7 @@ test('users can authenticate using the login screen', function () {
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(route('dashboard', absolute: false));
+    $response->assertRedirect(route('home', absolute: false));
 });
 
 test('users with two factor enabled are redirected to two factor challenge', function () {
@@ -50,6 +50,16 @@ test('users can not authenticate with invalid password', function () {
         'password' => 'wrong-password',
     ]);
 
+    $this->assertGuest();
+});
+
+test('email must be a valid email address', function () {
+    $response = $this->post(route('login.store'), [
+        'email' => 'not-an-email-address',
+        'password' => 'password',
+    ]);
+
+    $response->assertSessionHasErrors('email');
     $this->assertGuest();
 });
 
