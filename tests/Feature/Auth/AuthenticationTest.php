@@ -53,6 +53,16 @@ test('users can not authenticate with invalid password', function () {
     $this->assertGuest();
 });
 
+test('email must be a valid email address', function () {
+    $response = $this->post(route('login.store'), [
+        'email' => 'not-an-email-address',
+        'password' => 'password',
+    ]);
+
+    $response->assertSessionHasErrors('email');
+    $this->assertGuest();
+});
+
 test('users can logout', function () {
     $user = User::factory()->create();
 

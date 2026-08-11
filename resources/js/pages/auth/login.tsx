@@ -1,107 +1,136 @@
-import { Form, Head } from '@inertiajs/react';
-import InputError from '@/components/input-error';
-import PasswordInput from '@/components/password-input';
-import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Spinner } from '@/components/ui/spinner';
+import {
+    Box,
+    Button,
+    Card,
+    Link as ChakraLink,
+    Checkbox,
+    Field,
+    Input,
+    Stack,
+    Text,
+} from '@chakra-ui/react';
+import { Form, Head, Link } from '@inertiajs/react';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
 
-type Props = {
-    status?: string;
-};
-
-export default function Login({ status }: Props) {
+export default function Login() {
     return (
         <>
-            <Head title="Log in" />
+            <Head title="ログイン" />
 
-            <Form
-                {...store.form()}
-                resetOnSuccess={['password']}
-                className="flex flex-col gap-6"
+            <Card.Root
+                borderWidth="1px"
+                borderColor={{ base: 'gray.200', _dark: 'gray.700' }}
+                borderRadius="xl"
+                bg={{ base: 'white', _dark: 'gray.900' }}
+                boxShadow="sm"
+                overflow="hidden"
             >
-                {({ processing, errors }) => (
-                    <>
-                        <div className="grid gap-6">
-                            <div className="grid gap-2">
-                                <Label htmlFor="email">メールアドレス</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    name="email"
-                                    required
-                                    autoFocus
-                                    tabIndex={1}
-                                    autoComplete="email"
-                                    placeholder="email@example.com"
-                                />
-                                <InputError message={errors.email} />
-                            </div>
+                <Box h="1" bg="teal.500" />
 
-                            <div className="grid gap-2">
-                                <div className="flex items-center">
-                                    <Label htmlFor="password">パスワード</Label>
-                                    {/* {canResetPassword && (
-                                        <TextLink
-                                            href={request()}
-                                            className="ml-auto text-sm"
-                                            tabIndex={5}
-                                        >
-                                            パスワードを忘れた場合
-                                        </TextLink>
-                                    )} */}
-                                </div>
-                                <PasswordInput
-                                    id="password"
-                                    name="password"
-                                    required
-                                    tabIndex={2}
-                                    autoComplete="current-password"
-                                    placeholder="Password"
-                                />
-                                <InputError message={errors.password} />
-                            </div>
+                <Card.Body p={{ base: '6', sm: '8' }}>
+                    <Form {...store.form()} noValidate>
+                        {({ processing, errors }) => (
+                            <Stack gap="6">
+                                <Field.Root invalid={Boolean(errors.email)}>
+                                    <Field.Label fontWeight="semibold">
+                                        メールアドレス
+                                    </Field.Label>
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        name="email"
+                                        required
+                                        autoFocus
+                                        tabIndex={1}
+                                        autoComplete="email"
+                                        placeholder="email@example.com"
+                                        size="lg"
+                                        borderColor={{
+                                            base: 'gray.300',
+                                            _dark: 'gray.600',
+                                        }}
+                                    />
+                                    <Field.ErrorText>
+                                        {errors.email}
+                                    </Field.ErrorText>
+                                </Field.Root>
 
-                            <div className="flex items-center space-x-3">
-                                <Checkbox
-                                    id="remember"
+                                <Field.Root invalid={Boolean(errors.password)}>
+                                    <Field.Label fontWeight="semibold">
+                                        パスワード
+                                    </Field.Label>
+                                    <Input
+                                        id="password"
+                                        type="password"
+                                        name="password"
+                                        tabIndex={2}
+                                        autoComplete="current-password"
+                                        placeholder="パスワードを入力"
+                                        size="lg"
+                                        borderColor={{
+                                            base: 'gray.300',
+                                            _dark: 'gray.600',
+                                        }}
+                                    />
+                                    <Field.ErrorText>
+                                        {errors.password}
+                                    </Field.ErrorText>
+                                </Field.Root>
+
+                                <Checkbox.Root
                                     name="remember"
+                                    value="1"
                                     tabIndex={3}
-                                />
-                                <Label htmlFor="remember">ログインを維持</Label>
-                            </div>
+                                    colorPalette="teal"
+                                >
+                                    <Checkbox.HiddenInput />
+                                    <Checkbox.Control />
+                                    <Checkbox.Label>
+                                        ログイン状態を保持する
+                                    </Checkbox.Label>
+                                </Checkbox.Root>
 
-                            <Button
-                                type="submit"
-                                className="mt-4 w-full"
-                                tabIndex={4}
-                                disabled={processing}
-                                data-test="login-button"
-                            >
-                                {processing && <Spinner />}
-                                ログイン
-                            </Button>
-                        </div>
+                                <Button
+                                    type="submit"
+                                    size="lg"
+                                    width="full"
+                                    mt="1"
+                                    tabIndex={4}
+                                    loading={processing}
+                                    loadingText="ログイン中"
+                                    colorPalette="teal"
+                                    data-test="login-button"
+                                >
+                                    ログイン
+                                </Button>
+                            </Stack>
+                        )}
+                    </Form>
+                </Card.Body>
 
-                        <div className="text-center text-sm text-muted-foreground">
-                            アカウントを持っていない場合→{' '}
-                            <TextLink href={register()} tabIndex={5}>
+                <Card.Footer
+                    justifyContent="center"
+                    borderTopWidth="1px"
+                    borderColor={{ base: 'gray.100', _dark: 'gray.800' }}
+                    bg={{ base: 'gray.50', _dark: 'gray.950' }}
+                    py="4"
+                >
+                    <Text fontSize="sm" color="fg.muted">
+                        アカウントをお持ちでないですか？{' '}
+                        <ChakraLink
+                            asChild
+                            color="teal.600"
+                            fontWeight="semibold"
+                            textDecoration={'none'}
+                        >
+                            <Link href={register()} tabIndex={5}>
                                 新規登録
-                            </TextLink>
-                        </div>
-                    </>
-                )}
-            </Form>
-
-            {status && (
-                <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    {status}
-                </div>
-            )}
+                            </Link>
+                        </ChakraLink>
+                    </Text>
+                </Card.Footer>
+            </Card.Root>
         </>
     );
 }

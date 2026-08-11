@@ -1,0 +1,20 @@
+<?php
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Authentication Language Lines
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are used during authentication for various
+    | messages that we need to display to the user. You are free to modify
+    | these language lines according to your application's requirements.
+    |
+    */
+
+    'failed' => 'メールアドレスまたは、パスワードが間違っています',
+    'password' => 'ログイン情報が入力されていません',
+    'throttle' => 'ログインの試行回数が多すぎます。:seconds 秒後に再度お試しください。',
+
+];
