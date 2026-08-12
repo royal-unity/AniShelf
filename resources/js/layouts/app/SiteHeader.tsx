@@ -1,4 +1,5 @@
 import {
+    Badge,
     Box,
     Button,
     Link as ChakraLink,
@@ -61,7 +62,12 @@ export default function SiteHeader() {
                 >
                     {auth.user ? (
                         <>
-                            <Text color={'white'}>{auth.user.name}</Text>
+                            <Text color={'white'}>
+                                {auth.user.name}
+                                {auth.user.is_admin && (
+                                    <Badge ms={2}>管理者</Badge>
+                                )}
+                            </Text>
                             <ChakraLink
                                 asChild
                                 color={'white'}
