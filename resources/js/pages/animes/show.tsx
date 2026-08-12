@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { HiArrowSmLeft, HiExternalLink } from 'react-icons/hi';
 import { toast } from 'sonner';
 import AnimeImage from '@/components/AnimeCard/AnimeImage';
+import PageContainer from '@/components/PageContainer';
 import type { Anime } from '@/types/animes/anime';
 
 type WatchingStatus = {
@@ -68,7 +69,7 @@ export default function AnimeShow({
         <>
             <Head title={anime.name} />
 
-            <Box maxW={'1000px'} mx={'auto'}>
+            <PageContainer>
                 <Link
                     href="/"
                     mb={15}
@@ -187,7 +188,7 @@ export default function AnimeShow({
                         <Text>{anime.description}</Text>
                     </Box>
                 </Box>
-            </Box>
+            </PageContainer>
         </>
     );
 }
