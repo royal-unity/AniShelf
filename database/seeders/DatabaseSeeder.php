@@ -15,7 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(5)->create();
+        // 管理者ユーザーを作成
+        User::factory(2)->create([
+            'is_admin' => true,
+        ]);
+
+        // 一般ユーザーを作成
+        User::factory(3)->create();
 
         $this->call([
             GenresSeeder::class,
