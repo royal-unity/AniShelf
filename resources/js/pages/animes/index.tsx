@@ -1,15 +1,12 @@
-import { Box, Button, HStack, Input, SimpleGrid, Text } from '@chakra-ui/react';
-import { Link, router } from '@inertiajs/react';
+import { Box, Button, HStack, Input, Text } from '@chakra-ui/react';
+import { router } from '@inertiajs/react';
 import type { SubmitEvent } from 'react';
 import { useState } from 'react';
-import AnimeCard from '@/components/AnimeCard/AnimeCard';
+import AnimeGrid from '@/components/AnimeGrid';
+import PageContainer from '@/components/PageContainer';
+import type { PaginationLink } from '@/components/Pagination';
+import Pagination from '@/components/Pagination';
 import type { Anime } from '@/types/animes/anime';
-
-type PaginationLink = {
-    url: string | null;
-    label: string;
-    active: boolean;
-};
 
 // コントローラーから渡されるアニメの型
 type AnimePageProps = {
@@ -32,7 +29,7 @@ export default function AnimesIndex({ animes, searchKeyword }: AnimePageProps) {
     };
 
     return (
-        <Box>
+        <PageContainer size="wide">
             <form onSubmit={handleSearch}>
                 {/* アニメ検索入力欄 */}
                 <HStack
@@ -59,45 +56,14 @@ export default function AnimesIndex({ animes, searchKeyword }: AnimePageProps) {
                 <Text mt={16}>該当するアニメがありません</Text>
             ) : (
                 <>
-                    <Box minH={{ base: 'auto', lg: '700px' }}>
-                        <SimpleGrid
-                            width={'100%'}
-                            columns={{ base: 1, sm: 2, md: 3, lg: 5 }}
-                            mt={16}
-                            gap={'30px'}
-                        >
-                            {animes.data.map((anime) => (
-                                <AnimeCard key={anime.id} anime={anime} />
-                            ))}
-                        </SimpleGrid>
+                    <Box minH={{ base: 'auto', lg: '600px' }}>
+                        <AnimeGrid animes={animes.data} />
                     </Box>
 
                     {/* ページネーション作成 */}
-                    <HStack mt={3} justify={'center'}>
-                        {animes.links.map((link, index) => (
-                            <Button
-                                key={index}
-                                asChild
-                                disabled={link.url === null}
-                                variant={link.active ? 'solid' : 'outline'}
-                            >
-                                {/* linkのurlによってボタンの表示を変える */}
-                                {link.url ? (
-                                    <Link href={link.url}>
-                                        {index === 0
-                                            ? '前へ'
-                                            : index === animes.links.length - 1
-                                              ? '次へ'
-                                              : link.label}
-                                    </Link>
-                                ) : (
-                                    <span>{index === 0 ? '前へ' : '次へ'}</span>
-                                )}
-                            </Button>
-                        ))}
-                    </HStack>
+                    <Pagination links={animes.links} />
                 </>
             )}
-        </Box>
+        </PageContainer>
     );
 }
