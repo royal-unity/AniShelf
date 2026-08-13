@@ -1,11 +1,12 @@
 import { Box, Button, HStack, Input, Text } from '@chakra-ui/react';
-import { router } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import type { SubmitEvent } from 'react';
 import { useState } from 'react';
 import AnimeGrid from '@/components/AnimeGrid';
 import PageContainer from '@/components/PageContainer';
 import type { PaginationLink } from '@/components/Pagination';
 import Pagination from '@/components/Pagination';
+import { create } from '@/routes/animes';
 import type { Anime } from '@/types/animes/anime';
 
 // コントローラーから渡されるアニメの型
@@ -20,6 +21,8 @@ type AnimePageProps = {
 };
 
 export default function AnimesIndex({ animes, searchKeyword }: AnimePageProps) {
+    const { auth } = usePage().props;
+
     const [keyword, setKeyword] = useState(searchKeyword);
 
     const handleSearch = (e: SubmitEvent<HTMLFormElement>) => {
@@ -35,19 +38,27 @@ export default function AnimesIndex({ animes, searchKeyword }: AnimePageProps) {
                 <HStack
                     gap={4}
                     width="100%"
-                    maxW="500px"
                     alignSelf="flex-start"
+                    justify={'space-between'}
                 >
-                    <Input
-                        flex={1}
-                        minW={0}
-                        placeholder="検索したいアニメタイトルを入力"
-                        value={keyword}
-                        onChange={(e) => setKeyword(e.target.value)}
-                    />
-                    <Button flexShrink={0} type="submit">
-                        検索
-                    </Button>
+                    <HStack flex={1} gap={6}>
+                        <Input
+                            flex={1}
+                            minW={0}
+                            maxW={'300px'}
+                            placeholder="検索したいアニメタイトルを入力"
+                            value={keyword}
+                            onChange={(e) => setKeyword(e.target.value)}
+                        />
+                        <Button flexShrink={0} type="submit" px={10}>
+                            検索
+                        </Button>
+                    </HStack>
+                    {auth.user?.is_admin && (
+                        <Link href={create()}>
+                            <Button>アニメを登録</Button>
+                        </Link>
+                    )}
                 </HStack>
             </form>
 

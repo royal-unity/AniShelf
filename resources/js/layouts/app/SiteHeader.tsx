@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { HiMenu } from 'react-icons/hi';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { login, logout, register } from '@/routes';
+import { create } from '@/routes/animes';
 import { index } from '@/routes/mypage';
 
 export default function SiteHeader() {
@@ -46,15 +47,20 @@ export default function SiteHeader() {
                 marginX={'auto'}
                 justify={'space-between'}
             >
-                <ChakraLink
-                    fontSize="xl"
-                    color={'white'}
-                    fontWeight="bold"
-                    textDecoration={'none'}
-                    href="/"
-                >
-                    AniShelf
-                </ChakraLink>
+                <HStack gap={7}>
+                    <ChakraLink
+                        fontSize="xl"
+                        color={'white'}
+                        fontWeight="bold"
+                        textDecoration={'none'}
+                        href="/"
+                    >
+                        AniShelf
+                    </ChakraLink>
+                    {auth.user?.is_admin && (
+                        <InertiaLink href={create()}>アニメ登録</InertiaLink>
+                    )}
+                </HStack>
                 <HStack
                     gap={5}
                     justify={'space-between'}
