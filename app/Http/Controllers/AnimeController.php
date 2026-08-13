@@ -47,8 +47,6 @@ class AnimeController extends Controller
 
     /**
      * アニメを登録する
-     *
-     * @return RedirectResponse
      */
     public function store(AnimeRequest $request): RedirectResponse
     {
