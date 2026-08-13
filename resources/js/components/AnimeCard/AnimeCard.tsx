@@ -27,6 +27,7 @@ export default function AnimeCard({ anime }: AnimeCardProps) {
                 <AnimeImage
                     animeImagePath={anime.anime_img_path}
                     animeName={anime.name}
+                    maxHeightMode="index"
                 />
                 <CardBody>
                     <Card.Title fontSize={'sm'}>{anime.name}</Card.Title>

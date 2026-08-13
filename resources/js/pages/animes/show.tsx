@@ -85,6 +85,7 @@ export default function AnimeShow({
                     <AnimeImage
                         animeImagePath={anime.anime_img_path}
                         animeName={anime.name}
+                        maxHeightMode="show"
                     />
                     <VStack
                         alignItems="flex-start"
@@ -114,15 +115,17 @@ export default function AnimeShow({
                                 {anime.genre.name}
                             </Badge>
                         </Box>
-                        <Link
-                            my={5}
-                            href={anime.official_site_url}
-                            textDecoration={'none'}
-                            _hover={{ color: 'blue.600' }}
-                        >
-                            公式サイト
-                            <HiExternalLink />
-                        </Link>
+                        {anime.official_site_url && (
+                            <Link
+                                my={5}
+                                href={anime.official_site_url}
+                                textDecoration={'none'}
+                                _hover={{ color: 'blue.600' }}
+                            >
+                                公式サイト
+                                <HiExternalLink />
+                            </Link>
+                        )}
                         {auth.user && (
                             <Box width={{ base: '100%', sm: '320px' }}>
                                 <Select.Root
