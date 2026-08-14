@@ -1,7 +1,5 @@
-import { index } from '@/routes/animes';
-import { Anime } from '@/types/animes/anime';
-import { Genres } from '@/types/animes/genre';
 import {
+    Box,
     Button,
     Checkbox,
     createListCollection,
@@ -18,6 +16,9 @@ import {
     VStack,
 } from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
+import { index } from '@/routes/animes';
+import type { Anime } from '@/types/animes/anime';
+import type { Genres } from '@/types/animes/genre';
 
 type AnimeFormProps = {
     genres: Genres[];
@@ -25,6 +26,70 @@ type AnimeFormProps = {
     processing: boolean;
     errors: Record<string, string>;
     submitLabel: string;
+};
+
+type FileUploadListProps = {
+    currentImagePath?: string | null;
+    animeName?: string;
+};
+
+// 画像プレビュー
+const FileUploadList = ({
+    currentImagePath,
+    animeName,
+}: FileUploadListProps) => {
+    const fileUpload = useFileUploadContext();
+    const file = fileUpload.acceptedFiles[0];
+
+    // 新しく画像を選択した場合
+    if (file) {
+        return (
+            <FileUpload.ItemGroup>
+                <FileUpload.Item width="100%" height="200px" p="2" file={file}>
+                    <FileUpload.ItemPreviewImage
+                        width="100%"
+                        height="100%"
+                        objectFit="contain"
+                        borderRadius="md"
+                    />
+
+                    <Float placement="top-end">
+                        <FileUpload.ItemDeleteTrigger
+                            boxSize="5"
+                            layerStyle="fill.solid"
+                        />
+                    </Float>
+                </FileUpload.Item>
+            </FileUpload.ItemGroup>
+        );
+    }
+
+    // 既に保存済みの画像を表示
+    if (currentImagePath) {
+        return (
+            <Box
+                w={'100%'}
+                height="200px"
+                p={2}
+                borderWidth="1px"
+                borderColor={{
+                    base: 'gray.300',
+                    _dark: 'gray.800',
+                }}
+                borderRadius={'md'}
+            >
+                <Image
+                    src={`/storage/${currentImagePath}`}
+                    alt={animeName}
+                    width="100%"
+                    height={'100%'}
+                    objectFit="contain"
+                />
+            </Box>
+        );
+    }
+
+    return null;
 };
 
 export default function AnimeForm({
@@ -41,62 +106,6 @@ export default function AnimeForm({
             value: String(genre.id),
         })),
     });
-
-    type FileUploadListProps = {
-        currentImagePath?: string | null;
-        animeName?: string;
-    };
-
-    // 画像プレビュー
-    const FileUploadList = ({
-        currentImagePath,
-        animeName,
-    }: FileUploadListProps) => {
-        const fileUpload = useFileUploadContext();
-        const file = fileUpload.acceptedFiles[0];
-
-        // 新しく画像を選択した場合
-        if (file || currentImagePath) {
-            return (
-                <FileUpload.ItemGroup>
-                    <FileUpload.Item
-                        width="100%"
-                        height="200px"
-                        p="2"
-                        file={file}
-                    >
-                        <FileUpload.ItemPreviewImage
-                            width="100%"
-                            height="100%"
-                            objectFit="contain"
-                            borderRadius="md"
-                        />
-
-                        <Float placement="top-end">
-                            <FileUpload.ItemDeleteTrigger
-                                boxSize="5"
-                                layerStyle="fill.solid"
-                            />
-                        </Float>
-                    </FileUpload.Item>
-                </FileUpload.ItemGroup>
-            );
-        }
-
-        // 既に保存済みの画像を表示
-        if (currentImagePath) {
-            <Image
-                src={`/storage/${currentImagePath}`}
-                alt={animeName}
-                width="100%"
-                height="200px"
-                objectFit="contain"
-                borderRadius="md"
-            />;
-        }
-
-        return null;
-    };
 
     return (
         <>
