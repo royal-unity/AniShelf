@@ -103,7 +103,10 @@ export default function MypageIndex({
                         </Text>
                     ) : (
                         <>
-                            <Box minH={{ base: 'auto', lg: '600px' }}>
+                            <Box
+                                w={'100%'}
+                                minH={{ base: 'auto', lg: '600px' }}
+                            >
                                 <AnimeGrid
                                     animes={userWatchingAnimes.data.map(
                                         (watchingAnime) => watchingAnime.anime,

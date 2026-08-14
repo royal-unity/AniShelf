@@ -67,7 +67,7 @@ export default function AnimesIndex({ animes, searchKeyword }: AnimePageProps) {
                 <Text mt={16}>該当するアニメがありません</Text>
             ) : (
                 <>
-                    <Box minH={{ base: 'auto', lg: '600px' }}>
+                    <Box width={'100%'} minH={{ base: 'auto', lg: '600px' }}>
                         <AnimeGrid animes={animes.data} />
                     </Box>
 

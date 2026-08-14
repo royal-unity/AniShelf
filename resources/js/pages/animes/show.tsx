@@ -4,6 +4,7 @@ import {
     Button,
     Link as ChakraLink,
     createListCollection,
+    Dialog,
     HStack,
     Icon,
     Portal,
@@ -14,10 +15,9 @@ import {
 import { Head, Link as InertiaLink, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import { HiArrowSmLeft, HiExternalLink } from 'react-icons/hi';
-import { toast } from 'sonner';
 import AnimeImage from '@/components/AnimeCard/AnimeImage';
 import PageContainer from '@/components/PageContainer';
-import { edit, index } from '@/routes/animes';
+import { destroy, edit } from '@/routes/animes';
 import type { Anime } from '@/types/animes/anime';
 
 type WatchingStatus = {
@@ -51,18 +51,16 @@ export default function AnimeShow({
                 selectedValue,
             },
             {
-                onSuccess: () => {
-                    const label = watchingStatuses.find(
-                        (status) => Number(status.value) === selectedValue,
-                    )?.label;
-                    toast.success(`視聴状態を「${label}」に変更しました`);
-                },
                 onError: (errors) => {
-                    toast.error('視聴状態を変更できませんでした');
                     setStatusError(errors.selectedValue);
                 },
             },
         );
+    };
+
+    // アニメ削除処理
+    const handleDelete = () => {
+        router.delete(destroy(anime.id).url);
     };
 
     const { auth } = usePage().props;
@@ -190,11 +188,55 @@ export default function AnimeShow({
                                         編集
                                     </Button>
                                 </InertiaLink>
-                                <InertiaLink href={index()}>
-                                    <Button size={'sm'} colorPalette={'red'}>
-                                        削除
-                                    </Button>
-                                </InertiaLink>
+
+                                <Dialog.Root role="alertdialog">
+                                    <Dialog.Trigger asChild>
+                                        <Button size="sm" colorPalette="red">
+                                            削除
+                                        </Button>
+                                    </Dialog.Trigger>
+
+                                    <Portal>
+                                        <Dialog.Backdrop />
+
+                                        <Dialog.Positioner>
+                                            <Dialog.Content>
+                                                <Dialog.Header>
+                                                    <Dialog.Title>
+                                                        アニメを削除しますか？
+                                                    </Dialog.Title>
+                                                </Dialog.Header>
+
+                                                <Dialog.Body>
+                                                    <Text>
+                                                        「{anime.name}
+                                                        」を削除します。
+                                                        この操作は取り消せません。
+                                                    </Text>
+                                                </Dialog.Body>
+
+                                                <Dialog.Footer>
+                                                    <Dialog.ActionTrigger
+                                                        asChild
+                                                    >
+                                                        <Button variant="outline">
+                                                            キャンセル
+                                                        </Button>
+                                                    </Dialog.ActionTrigger>
+
+                                                    <Button
+                                                        colorPalette="red"
+                                                        onClick={handleDelete}
+                                                    >
+                                                        削除する
+                                                    </Button>
+                                                </Dialog.Footer>
+
+                                                <Dialog.CloseTrigger />
+                                            </Dialog.Content>
+                                        </Dialog.Positioner>
+                                    </Portal>
+                                </Dialog.Root>
                             </HStack>
                         )}
                     </VStack>
