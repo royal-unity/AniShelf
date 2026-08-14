@@ -185,10 +185,31 @@ class AnimeController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * アニメ削除処理
+     * 
+     * @param Anime $anime
+     * @return RedirectResponse
      */
-    public function destroy(string $id): void
+    public function destroy(Anime $anime): RedirectResponse
     {
-        //
+        try{
+            $anime->delete();
+
+            Inertia::flash('toast', [
+                'type' => 'success',
+                'message' => "「{$anime->name}」を削除しました",
+            ]);
+
+            return to_route('animes.index');
+        }catch(Throwable $e){
+            report($e);
+
+            Inertia::flash('toast', [
+                'type' => 'error',
+                'message' => 'アニメの削除に失敗しました',
+            ]);
+
+            return back();
+        }
     }
 }
