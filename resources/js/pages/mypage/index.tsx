@@ -1,10 +1,10 @@
+import { Box, Button, HStack, Text, VStack } from '@chakra-ui/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import AnimeGrid from '@/components/AnimeGrid';
 import PageContainer from '@/components/PageContainer';
 import type { PaginationLink } from '@/components/Pagination';
 import Pagination from '@/components/Pagination';
 import type { Anime } from '@/types/animes/anime';
-import { Box, Button, HStack, Text, VStack } from '@chakra-ui/react';
-import { Head, router, usePage } from '@inertiajs/react';
 
 type WatchingStatus = {
     label: string;

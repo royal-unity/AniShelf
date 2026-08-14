@@ -186,13 +186,10 @@ class AnimeController extends Controller
 
     /**
      * アニメ削除処理
-     * 
-     * @param Anime $anime
-     * @return RedirectResponse
      */
     public function destroy(Anime $anime): RedirectResponse
     {
-        try{
+        try {
             $anime->delete();
 
             Inertia::flash('toast', [
@@ -201,7 +198,7 @@ class AnimeController extends Controller
             ]);
 
             return to_route('animes.index');
-        }catch(Throwable $e){
+        } catch (Throwable $e) {
             report($e);
 
             Inertia::flash('toast', [

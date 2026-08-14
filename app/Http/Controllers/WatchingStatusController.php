@@ -19,7 +19,7 @@ class WatchingStatusController extends Controller
     {
         $validated = $request->validated();
 
-        try{
+        try {
             UserWatchingAnime::updateOrCreate(
                 [
                     'user_id' => auth()->id(),
@@ -34,12 +34,12 @@ class WatchingStatusController extends Controller
                 $validated['selectedValue']
             );
 
-            Inertia::flash('toast',[
+            Inertia::flash('toast', [
                 'type' => 'success',
                 'message' => "視聴状態を「{$status->lavel()}」に変更しました",
             ]);
 
-        } catch(Throwable $e){
+        } catch (Throwable $e) {
             report($e);
 
             Inertia::flash('toast', [

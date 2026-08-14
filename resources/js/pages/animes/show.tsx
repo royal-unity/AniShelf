@@ -1,7 +1,3 @@
-import AnimeImage from '@/components/AnimeCard/AnimeImage';
-import PageContainer from '@/components/PageContainer';
-import { destroy, edit } from '@/routes/animes';
-import type { Anime } from '@/types/animes/anime';
 import {
     Badge,
     Box,
@@ -19,6 +15,10 @@ import {
 import { Head, Link as InertiaLink, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import { HiArrowSmLeft, HiExternalLink } from 'react-icons/hi';
+import AnimeImage from '@/components/AnimeCard/AnimeImage';
+import PageContainer from '@/components/PageContainer';
+import { destroy, edit } from '@/routes/animes';
+import type { Anime } from '@/types/animes/anime';
 
 type WatchingStatus = {
     label: string;
