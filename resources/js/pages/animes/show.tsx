@@ -1,21 +1,23 @@
 import {
     Badge,
     Box,
+    Button,
+    Link as ChakraLink,
     createListCollection,
     HStack,
     Icon,
-    Link,
     Portal,
     Select,
     Text,
     VStack,
 } from '@chakra-ui/react';
-import { Head, router, usePage } from '@inertiajs/react';
+import { Head, Link as InertiaLink, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import { HiArrowSmLeft, HiExternalLink } from 'react-icons/hi';
 import { toast } from 'sonner';
 import AnimeImage from '@/components/AnimeCard/AnimeImage';
 import PageContainer from '@/components/PageContainer';
+import { edit, index } from '@/routes/animes';
 import type { Anime } from '@/types/animes/anime';
 
 type WatchingStatus = {
@@ -70,7 +72,7 @@ export default function AnimeShow({
             <Head title={anime.name} />
 
             <PageContainer>
-                <Link
+                <ChakraLink
                     href="/"
                     mb={15}
                     textDecoration={'none'}
@@ -80,7 +82,7 @@ export default function AnimeShow({
                         <HiArrowSmLeft />
                     </Icon>
                     <Text fontSize={'sm'}>一覧へ戻る</Text>
-                </Link>
+                </ChakraLink>
                 <HStack gap={10} flexDirection={{ base: 'column', lg: 'row' }}>
                     <AnimeImage
                         animeImagePath={anime.anime_img_path}
@@ -116,7 +118,7 @@ export default function AnimeShow({
                             </Badge>
                         </Box>
                         {anime.official_site_url && (
-                            <Link
+                            <ChakraLink
                                 my={5}
                                 href={anime.official_site_url}
                                 textDecoration={'none'}
@@ -124,7 +126,7 @@ export default function AnimeShow({
                             >
                                 公式サイト
                                 <HiExternalLink />
-                            </Link>
+                            </ChakraLink>
                         )}
                         {auth.user && (
                             <Box width={{ base: '100%', sm: '320px' }}>
@@ -180,6 +182,20 @@ export default function AnimeShow({
                                     </Text>
                                 )}
                             </Box>
+                        )}
+                        {auth.user?.is_admin && (
+                            <HStack mt={10} gap={4}>
+                                <InertiaLink href={edit(anime.id)}>
+                                    <Button size={'sm'} colorPalette={'blue'}>
+                                        編集
+                                    </Button>
+                                </InertiaLink>
+                                <InertiaLink href={index()}>
+                                    <Button size={'sm'} colorPalette={'red'}>
+                                        削除
+                                    </Button>
+                                </InertiaLink>
+                            </HStack>
                         )}
                     </VStack>
                 </HStack>

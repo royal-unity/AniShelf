@@ -2,14 +2,16 @@ import { Text } from '@chakra-ui/react';
 import { Form } from '@inertiajs/react';
 import AnimeForm from '@/components/AnimeForm/AnimeForm';
 import PageContainer from '@/components/PageContainer';
-import { store } from '@/routes/animes';
+import { update } from '@/routes/animes';
+import type { Anime } from '@/types/animes/anime';
 import type { Genres } from '@/types/animes/genre';
 
-type AnimeCreateProps = {
+type AnimeEditProps = {
+    anime: Anime;
     genres: Genres[];
 };
 
-export default function AnimeCreate({ genres }: AnimeCreateProps) {
+export default function AnimeEdit({ genres, anime }: AnimeEditProps) {
     return (
         <PageContainer>
             <Text
@@ -22,13 +24,14 @@ export default function AnimeCreate({ genres }: AnimeCreateProps) {
                 アニメ登録
             </Text>
 
-            <Form {...store.form()} noValidate>
+            <Form {...update.form(anime.id)} noValidate>
                 {({ processing, errors }) => (
                     <AnimeForm
+                        anime={anime}
                         genres={genres}
                         processing={processing}
                         errors={errors}
-                        submitLabel="登録"
+                        submitLabel="更新"
                     />
                 )}
             </Form>

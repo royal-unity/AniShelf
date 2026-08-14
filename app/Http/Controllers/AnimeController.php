@@ -55,17 +55,20 @@ class AnimeController extends Controller
 
         try {
 
-            // 画像があれば、画像をstorageに保存する
-            if ($request->hasFile('anime_img_path')) {
-                $imagePath = $request->file('anime_img_path')->store('animes', 'public');
-            }
-
             $anime = Anime::create([
                 'genre_id' => $validated['genre_id'],
                 'name' => $validated['name'],
                 'official_site_url' => $validated['official_site_url'] ?? null,
                 'description' => $validated['description'] ?? null,
                 'is_current_season' => $validated['is_current_season'],
+            ]);
+
+            // 画像があれば、画像をstorageに保存する
+            if ($request->hasFile('anime_img_path')) {
+                $imagePath = $request->file('anime_img_path')->store("animes/{$anime->id}", 'public');
+            }
+
+            $anime->update([
                 'anime_img_path' => $imagePath,
             ]);
 
@@ -117,17 +120,68 @@ class AnimeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id): void
+    public function edit(Anime $anime): Response
     {
-        //
+
+        $anime->load('genre');
+        $genres = Genre::all();
+
+        return Inertia::render('animes/edit', ['anime' => $anime, 'genres' => $genres]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): void
+    public function update(AnimeRequest $request, Anime $anime): RedirectResponse
     {
-        //
+        $validated = $request->validated();
+        $imagePath = null;
+        $oldImagePath = $anime->anime_img_path;
+
+        try {
+
+            $updateData = [
+                'genre_id' => $validated['genre_id'],
+                'name' => $validated['name'],
+                'official_site_url' => $validated['official_site_url'] ?? null,
+                'description' => $validated['description'] ?? null,
+                'is_current_season' => $validated['is_current_season'],
+            ];
+
+            // 画像があれば、画像をstorageに保存する
+            if ($request->hasFile('anime_img_path')) {
+                $imagePath = $request->file('anime_img_path')->store("animes/{$anime->id}", 'public');
+                $updateData['anime_img_path'] = $imagePath;
+            }
+
+            $anime->update($updateData);
+
+            // 新しい画像へ更新できた場合だけ、古い画像を削除
+            if ($imagePath !== null && $oldImagePath !== null) {
+                Storage::disk('public')->delete($oldImagePath);
+            }
+
+            Inertia::flash('toast', [
+                'type' => 'success',
+                'message' => 'アニメを更新しました',
+            ]);
+
+            return to_route('animes.show', $anime);
+        } catch (Throwable $e) {
+            // DB保存に失敗し、画像のみ保存された場合、保存された画像を削除する
+            if ($imagePath != null) {
+                Storage::disk('public')->delete($imagePath);
+            }
+
+            report($e);
+
+            Inertia::flash('toast', [
+                'type' => 'error',
+                'message' => 'アニメの更新に失敗しました',
+            ]);
+
+            return back()->withInput();
+        }
     }
 
     /**
