@@ -17,6 +17,9 @@ class AnimeController extends Controller
 {
     /**
      * アニメ一覧を表示する
+     *
+     * @param  Request  $request
+     * @return Response
      */
     public function index(Request $request): Response
     {
@@ -37,6 +40,8 @@ class AnimeController extends Controller
 
     /**
      * アニメ登録画面を表示する
+     *
+     * @return Response
      */
     public function create(): Response
     {
@@ -47,6 +52,9 @@ class AnimeController extends Controller
 
     /**
      * アニメを登録する
+     *
+     * @param  AnimeRequest  $request
+     * @return RedirectResponse
      */
     public function store(AnimeRequest $request): RedirectResponse
     {
@@ -97,6 +105,9 @@ class AnimeController extends Controller
 
     /**
      * アニメ詳細画面表示
+     *
+     * @param  Anime  $anime
+     * @return Response
      */
     public function show(Anime $anime): Response
     {
@@ -118,7 +129,10 @@ class AnimeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * アニメ編集画面表示
+     *
+     * @param  Anime  $anime
+     * @return Response
      */
     public function edit(Anime $anime): Response
     {
@@ -130,7 +144,11 @@ class AnimeController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * アニメ更新処理
+     *
+     * @param  AnimeRequest  $request
+     * @param  Anime  $anime
+     * @return RedirectResponse
      */
     public function update(AnimeRequest $request, Anime $anime): RedirectResponse
     {
@@ -186,6 +204,9 @@ class AnimeController extends Controller
 
     /**
      * アニメ削除処理
+     *
+     * @param  Anime  $anime
+     * @return RedirectResponse
      */
     public function destroy(Anime $anime): RedirectResponse
     {
