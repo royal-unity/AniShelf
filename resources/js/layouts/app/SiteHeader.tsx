@@ -16,7 +16,8 @@ import { HiMenu } from 'react-icons/hi';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { login, logout, register } from '@/routes';
 import { create } from '@/routes/animes';
-import { index } from '@/routes/mypage';
+import { index as genreIndex } from '@/routes/genres';
+import { index as mypageIndex } from '@/routes/mypage';
 
 export default function SiteHeader() {
     const { auth } = usePage().props;
@@ -58,7 +59,20 @@ export default function SiteHeader() {
                         AniShelf
                     </ChakraLink>
                     {auth.user?.is_admin && (
-                        <InertiaLink href={create()}>アニメ登録</InertiaLink>
+                        <>
+                            <HStack
+                                display={{ sm: 'none', md: 'flex' }}
+                                color={'white'}
+                                gap={4}
+                            >
+                                <InertiaLink href={create()}>
+                                    アニメ登録
+                                </InertiaLink>
+                                <InertiaLink href={genreIndex()}>
+                                    ジャンル一覧
+                                </InertiaLink>
+                            </HStack>
+                        </>
                     )}
                 </HStack>
                 <HStack
@@ -79,7 +93,7 @@ export default function SiteHeader() {
                                 color={'white'}
                                 textDecoration={'none'}
                             >
-                                <InertiaLink href={index()}>
+                                <InertiaLink href={mypageIndex()}>
                                     マイページ
                                 </InertiaLink>
                             </ChakraLink>
@@ -139,20 +153,26 @@ export default function SiteHeader() {
                                             <Drawer.Body>
                                                 <VStack
                                                     alignItems={'self-start'}
+                                                    gap={5}
                                                 >
-                                                    <ChakraLink
-                                                        asChild
-                                                        textDecoration={'none'}
+                                                    <InertiaLink
+                                                        onClick={closeDrawer}
+                                                        href={mypageIndex()}
                                                     >
-                                                        <InertiaLink
-                                                            onClick={
-                                                                closeDrawer
-                                                            }
-                                                            href={index()}
-                                                        >
-                                                            マイページ
-                                                        </InertiaLink>
-                                                    </ChakraLink>
+                                                        マイページ
+                                                    </InertiaLink>
+                                                    <InertiaLink
+                                                        onClick={closeDrawer}
+                                                        href={create()}
+                                                    >
+                                                        アニメ登録
+                                                    </InertiaLink>
+                                                    <InertiaLink
+                                                        onClick={closeDrawer}
+                                                        href={genreIndex()}
+                                                    >
+                                                        ジャンル一覧
+                                                    </InertiaLink>
                                                     <InertiaLink
                                                         className="cursor-pointer"
                                                         href={logout()}

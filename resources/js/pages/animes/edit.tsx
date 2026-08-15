@@ -21,7 +21,7 @@ export default function AnimeEdit({ genres, anime }: AnimeEditProps) {
                 mb={18}
                 textAlign={'center'}
             >
-                アニメ登録
+                アニメ編集
             </Text>
 
             <Form {...update.form(anime.id)} noValidate>
