@@ -1,10 +1,10 @@
+import { Text } from '@chakra-ui/react';
+import { Form } from '@inertiajs/react';
 import AnimeForm from '@/components/AnimeForm/AnimeForm';
 import PageContainer from '@/components/PageContainer';
 import { update } from '@/routes/animes';
 import type { Anime } from '@/types/animes/anime';
 import type { Genres } from '@/types/animes/genre';
-import { Text } from '@chakra-ui/react';
-import { Form } from '@inertiajs/react';
 
 type AnimeEditProps = {
     anime: Anime;

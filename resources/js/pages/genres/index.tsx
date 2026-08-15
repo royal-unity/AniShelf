@@ -1,6 +1,3 @@
-import PageContainer from '@/components/PageContainer';
-import { destroy, store, update } from '@/routes/genres';
-import type { Genres } from '@/types/animes/genre';
 import {
     Badge,
     Box,
@@ -18,6 +15,9 @@ import {
 import { router, useForm } from '@inertiajs/react';
 import type { SubmitEvent } from 'react';
 import { useState } from 'react';
+import PageContainer from '@/components/PageContainer';
+import { destroy, store, update } from '@/routes/genres';
+import type { Genres } from '@/types/animes/genre';
 
 // コントローラーから渡されるアニメの型
 type GenreIndexProps = {
