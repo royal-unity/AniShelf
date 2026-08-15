@@ -1,3 +1,8 @@
+import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
+import { login, logout, register } from '@/routes';
+import { create } from '@/routes/animes';
+import { index as genreIndex } from '@/routes/genres';
+import { index as mypageIndex } from '@/routes/mypage';
 import {
     Badge,
     Box,
@@ -13,11 +18,6 @@ import {
 import { Link as InertiaLink, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import { HiMenu } from 'react-icons/hi';
-import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
-import { login, logout, register } from '@/routes';
-import { create } from '@/routes/animes';
-import { index as genreIndex } from '@/routes/genres';
-import { index as mypageIndex } from '@/routes/mypage';
 
 export default function SiteHeader() {
     const { auth } = usePage().props;
@@ -61,7 +61,7 @@ export default function SiteHeader() {
                     {auth.user?.is_admin && (
                         <>
                             <HStack
-                                display={{ sm: 'none', md: 'flex' }}
+                                display={{ base: 'none', md: 'flex' }}
                                 color={'white'}
                                 gap={4}
                             >
