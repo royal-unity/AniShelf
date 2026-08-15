@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnimeController;
+use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\WatchingStatusController;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('animes', AnimeController::class)->except(['index', 'show']);
+    Route::resource('genres', GenreController::class);
 });
 
 Route::get('/', [AnimeController::class, 'index'])->name('home');

@@ -1,13 +1,13 @@
-import { Box, Button, HStack, Input, Text } from '@chakra-ui/react';
-import { Link, router, usePage } from '@inertiajs/react';
-import type { SubmitEvent } from 'react';
-import { useState } from 'react';
 import AnimeGrid from '@/components/AnimeGrid';
 import PageContainer from '@/components/PageContainer';
 import type { PaginationLink } from '@/components/Pagination';
 import Pagination from '@/components/Pagination';
 import { create } from '@/routes/animes';
 import type { Anime } from '@/types/animes/anime';
+import { Box, Button, HStack, Input, Text } from '@chakra-ui/react';
+import { Link, router, usePage } from '@inertiajs/react';
+import type { SubmitEvent } from 'react';
+import { useState } from 'react';
 
 // コントローラーから渡されるアニメの型
 type AnimePageProps = {

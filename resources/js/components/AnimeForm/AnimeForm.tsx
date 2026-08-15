@@ -1,3 +1,6 @@
+import { index } from '@/routes/animes';
+import type { Anime } from '@/types/animes/anime';
+import type { Genres } from '@/types/animes/genre';
 import {
     Box,
     Button,
@@ -16,9 +19,6 @@ import {
     VStack,
 } from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
-import { index } from '@/routes/animes';
-import type { Anime } from '@/types/animes/anime';
-import type { Genres } from '@/types/animes/genre';
 
 type AnimeFormProps = {
     genres: Genres[];
