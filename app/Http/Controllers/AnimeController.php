@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Enum\WatchingStatus;
 use App\Http\Requests\AnimeRequest;
+use App\Http\Requests\AnimeSearchRequest;
 use App\Models\Anime;
 use App\Models\Genre;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Storage;
@@ -18,23 +18,35 @@ class AnimeController extends Controller
     /**
      * アニメ一覧を表示する
      *
-     * @param  Request  $request
+     * @param  AnimeSearchRequest  $request
      * @return Response
      */
-    public function index(Request $request): Response
+    public function index(AnimeSearchRequest $request): Response
     {
-        $keyword = $request->string('keyword')->trim()->toString();
+        $genres = Genre::all();
 
-        $animes = Anime::with('genre')
-            ->when($keyword, function ($query, $keyword) {
-                $query->where('name', 'like', "%{$keyword}%");
-            })
-            ->paginate(10)
-            ->withQueryString();
+        $validated = $request->validated();
+
+        $keyword = trim($validated['keyword'] ?? '');
+        $genreId = $validated['genre_id'] ?? null;
+
+        $query = Anime::with('genre');
+
+        if ($genreId !== null) {
+            $query = $query->where('genre_id', $genreId);
+        }
+
+        if ($keyword !== '') {
+            $query = $query->where('name', 'like', "%{$keyword}%");
+        }
+
+        $animes = $query->paginate(10)->withQueryString();
 
         return Inertia::render('animes/index', [
+            'genres' => $genres,
             'animes' => $animes,
             'keyword' => $keyword,
+            'selectedGenre' => $genreId,
         ]);
     }
 

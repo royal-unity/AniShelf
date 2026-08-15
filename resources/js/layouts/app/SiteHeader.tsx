@@ -61,7 +61,7 @@ export default function SiteHeader() {
                     {auth.user?.is_admin && (
                         <>
                             <HStack
-                                display={{ sm: 'none', md: 'flex' }}
+                                display={{ base: 'none', md: 'flex' }}
                                 color={'white'}
                                 gap={4}
                             >
