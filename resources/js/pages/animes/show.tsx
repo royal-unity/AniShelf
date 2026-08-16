@@ -189,7 +189,11 @@ export default function AnimeShow({
                                     </Button>
                                 </InertiaLink>
 
-                                <Dialog.Root role="alertdialog">
+                                <Dialog.Root
+                                    role="alertdialog"
+                                    placement={'center'}
+                                    closeOnInteractOutside={true}
+                                >
                                     <Dialog.Trigger asChild>
                                         <Button size="sm" colorPalette="red">
                                             削除
