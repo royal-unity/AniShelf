@@ -101,6 +101,11 @@ export default function Register() {
                                             _dark: 'gray.600',
                                         }}
                                     />
+                                    <Field.HelperText>
+                                        12文字以上
+                                        <br />
+                                        大文字・小文字・数字・記号を含めてください
+                                    </Field.HelperText>
                                     <Field.ErrorText>
                                         {errors.password}
                                     </Field.ErrorText>
