@@ -4,6 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        @env('production')
+            <meta name="robots" content="noindex, nofollow">
+        @endenv
+
         {{-- Inline script to detect system dark mode preference and apply it immediately --}}
         <script>
             (function() {
