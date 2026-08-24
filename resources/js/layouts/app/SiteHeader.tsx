@@ -161,18 +161,27 @@ export default function SiteHeader() {
                                                     >
                                                         マイページ
                                                     </InertiaLink>
-                                                    <InertiaLink
-                                                        onClick={closeDrawer}
-                                                        href={create()}
-                                                    >
-                                                        アニメ登録
-                                                    </InertiaLink>
-                                                    <InertiaLink
-                                                        onClick={closeDrawer}
-                                                        href={genreIndex()}
-                                                    >
-                                                        ジャンル一覧
-                                                    </InertiaLink>
+                                                    {auth.user?.is_admin && (
+                                                        <>
+                                                            <InertiaLink
+                                                                onClick={
+                                                                    closeDrawer
+                                                                }
+                                                                href={create()}
+                                                            >
+                                                                アニメ登録
+                                                            </InertiaLink>
+                                                            <InertiaLink
+                                                                onClick={
+                                                                    closeDrawer
+                                                                }
+                                                                href={genreIndex()}
+                                                            >
+                                                                ジャンル一覧
+                                                            </InertiaLink>
+                                                        </>
+                                                    )}
+
                                                     <InertiaLink
                                                         className="cursor-pointer"
                                                         href={logout()}
