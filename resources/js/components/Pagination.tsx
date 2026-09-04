@@ -12,7 +12,7 @@ type PaginationProps = {
 
 export default function Pagination({ links }: PaginationProps) {
     return (
-        <HStack mt={3} justify={'center'}>
+        <HStack mt={3} justify={'center'} flexWrap={'wrap'}>
             {links.map((link, index) => (
                 <Button
                     key={index}

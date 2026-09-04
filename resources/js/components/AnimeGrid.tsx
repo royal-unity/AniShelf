@@ -11,7 +11,7 @@ export default function AnimeGrid({ animes }: AnimeGridProps) {
         <>
             <SimpleGrid
                 width={'100%'}
-                columns={{ base: 1, sm: 2, md: 3, lg: 5 }}
+                columns={{ base: 2, sm: 2, md: 3, lg: 5 }}
                 mt={16}
                 gap={'30px'}
             >
