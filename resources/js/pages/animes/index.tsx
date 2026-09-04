@@ -99,7 +99,7 @@ export default function AnimesIndex({
                             </Field.ErrorText>
                         </Field.Root>
                         <Field.Root
-                            width={{ base: '100%', md: '300px' }}
+                            width={{ base: '100%', md: '140px', lg: '300px' }}
                             flexShrink={0}
                             invalid={Boolean(searchForm.errors.genre_id)}
                         >
